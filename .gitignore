@@ -1,0 +1,25 @@
+
+# Visual Studio temporary files
+.vs/
+*.suo
+*.user
+
+# Visual Studio database files
+*.VC.db
+*.VC.db-shm
+*.VC.db-wal
+*.VC.opendb
+
+# Build-generated files
+*.exe
+*.exe.recipe
+*.log
+*.lastbuildstate
+*.obj
+*.pdb
+*.ilk
+
+# Build folders
+Debug/
+Release/
+x64/
