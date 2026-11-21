@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="VehicleManagementSystem/VehicleManagementSystem.vcxproj" />
+  <Project Path="VehicleManagementSystem/VehicleManagementSystem.vcxproj" Id="bb70b39a-9b50-4676-9b52-c73c00a6c981" />
 </Solution>
