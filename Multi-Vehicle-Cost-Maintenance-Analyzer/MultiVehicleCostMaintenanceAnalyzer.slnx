@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="MultiVehicleCostMaintenanceAnalyzer\MultiVehicleCostMaintenanceAnalyzer.vcxproj" Id="bb70b39a-9b50-4676-9b52-c73c00a6c981" />
+</Solution>
