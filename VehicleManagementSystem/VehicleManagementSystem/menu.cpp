@@ -1,7 +1,8 @@
 #include <iostream>
+#include "menu.h"
 using namespace std;
 
-int main() {
+int menu() {
     int vehicles;
     int expensesK;
     int choice = 0;
