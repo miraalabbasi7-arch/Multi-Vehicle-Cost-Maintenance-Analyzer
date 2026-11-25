@@ -28,6 +28,7 @@
     <ClInclude Include="expense.h" />
     <ClInclude Include="maintenance.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="structures.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
