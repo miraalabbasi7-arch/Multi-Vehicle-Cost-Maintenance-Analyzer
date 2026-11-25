@@ -19,10 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="expense.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="maintenance.cpp" />
     <ClCompile Include="menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="expense.h" />
+    <ClInclude Include="maintenance.h" />
     <ClInclude Include="menu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
