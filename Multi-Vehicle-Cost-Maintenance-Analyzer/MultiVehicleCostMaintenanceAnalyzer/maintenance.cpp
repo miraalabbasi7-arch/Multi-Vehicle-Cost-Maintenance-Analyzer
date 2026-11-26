@@ -373,3 +373,103 @@ void checkMaintenanceStatus()
         cout << "\nNo maintenance records found for this vehicle!\n";
     }
 }
+
+
+
+void displayMaintenanceSummary()
+{
+    if (vehicleCount == 0)
+    {
+        cout << "\nNo registered vehicles available!\n";
+        return;
+    }
+
+    cout << "\n--- REGISTERED VEHICLES ---\n";
+
+    for (int i = 0; i < vehicleCount; i++)
+    {
+        cout << i + 1 << ". "
+            << vehicles[i].brand << " "
+            << vehicles[i].model
+            << " (ID: " << vehicles[i].vehicleID << ")\n";
+    }
+
+    int choice;
+
+    cout << "\nSelect vehicle: ";
+    cin >> choice;
+
+    if (choice < 1 || choice > vehicleCount)
+    {
+        cout << "Invalid selection!\n";
+        return;
+    }
+
+    int index = choice - 1;
+    int id = vehicles[index].vehicleID;
+
+    int normal = 0;
+    int upcoming = 0;
+    int overdue = 0;
+    int total = 0;
+
+    for (int i = maintenanceRecordCount - 1; i >= 0; i--)
+    {
+        if (maintenanceRecords[i].vehicleID != id)
+            continue;
+
+        bool alreadyCounted = false;
+
+        for (int j = i + 1; j < maintenanceRecordCount; j++)
+        {
+            if (maintenanceRecords[j].vehicleID == id &&
+                maintenanceRecords[j].maintenanceType ==
+                maintenanceRecords[i].maintenanceType)
+            {
+                alreadyCounted = true;
+                break;
+            }
+        }
+
+        if (alreadyCounted)
+            continue;
+
+        double nextDue =
+            maintenanceRecords[i].odometer +
+            maintenanceRecords[i].interval;
+
+        double remaining =
+            nextDue - vehicles[index].currentOdometer;
+
+        if (remaining <= 0)
+            overdue++;
+        else if (remaining <= 500)
+            upcoming++;
+        else
+            normal++;
+
+        total++;
+    }
+
+    cout << "\n====================================\n";
+    cout << "       MAINTENANCE SUMMARY\n";
+    cout << "====================================\n";
+
+    cout << "Vehicle: "
+        << vehicles[index].brand << " "
+        << vehicles[index].model << "\n";
+
+    cout << "Total Maintenance Types: "
+        << total << "\n";
+
+    cout << "Normal Services: "
+        << normal << "\n";
+
+    cout << "Upcoming Services: "
+        << upcoming << "\n";
+
+    cout << "Overdue Services: "
+        << overdue << "\n";
+
+    cout << "====================================\n";
+}

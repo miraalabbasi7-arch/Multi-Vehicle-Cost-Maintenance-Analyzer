@@ -5,3 +5,4 @@ void addMaintenanceRecord();
 void displayMaintenanceRecords();
 void calculateNextMaintenance();
 void checkMaintenanceStatus();
+void displayMaintenanceSummary();
