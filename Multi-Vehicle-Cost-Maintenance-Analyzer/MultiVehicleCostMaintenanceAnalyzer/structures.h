@@ -1,5 +1,4 @@
-#ifndef STRUCTURES_H
-#define STRUCTURES_H
+#pragma once
 
 #include <string>
 using namespace std;
@@ -36,4 +35,13 @@ struct MaintenanceRecord
     double interval;
 };
 
-#endif
+// Shared arrays
+extern Vehicle vehicles[MAX_VEHICLES];
+extern FuelRecord fuelRecords[MAX_RECORDS];
+extern MaintenanceRecord maintenanceRecords[MAX_RECORDS];
+
+// Record counts
+extern int vehicleCount;
+extern int fuelRecordCount;
+extern int maintenanceRecordCount;
+
