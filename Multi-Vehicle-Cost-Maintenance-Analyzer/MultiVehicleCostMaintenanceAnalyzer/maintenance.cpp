@@ -144,83 +144,179 @@ void displayMaintenanceRecords()
 
 void calculateNextMaintenance()
 {
+    if (maintenanceRecordCount == 0)
+    {
+        cout << "No maintenance records available!\n";
+        return;
+    }
+
     int id;
-    bool found = false;
+    bool vehicleFound = false;
 
     cout << "Enter Vehicle ID: ";
     cin >> id;
 
-    for (int i = maintenanceRecordCount - 1; i >= 0; i--)
+    double currentOdometer = 0;
+
+    for (int i = 0; i < vehicleCount; i++)
     {
-        if (maintenanceRecords[i].vehicleID == id)
+        if (vehicles[i].vehicleID == id)
         {
-            double nextDue = maintenanceRecords[i].odometer
-                + maintenanceRecords[i].interval;
-
-            cout << "\nNext Maintenance Due At: "
-                << nextDue << " km\n";
-
-            found = true;
+            currentOdometer = vehicles[i].currentOdometer;
+            vehicleFound = true;
             break;
         }
     }
 
-    if (!found)
+    if (!vehicleFound)
     {
-        cout << "No maintenance record found for this vehicle!\n";
+        cout << "Vehicle not found!\n";
+        return;
+    }
+
+    cout << "\n--- NEXT MAINTENANCE DUE ---\n";
+
+    bool recordFound = false;
+
+    for (int i = maintenanceRecordCount - 1; i >= 0; i--)
+    {
+        if (maintenanceRecords[i].vehicleID != id)
+            continue;
+
+        bool alreadyDisplayed = false;
+
+        for (int j = i + 1; j < maintenanceRecordCount; j++)
+        {
+            if (maintenanceRecords[j].vehicleID == id &&
+                maintenanceRecords[j].maintenanceType ==
+                maintenanceRecords[i].maintenanceType)
+            {
+                alreadyDisplayed = true;
+                break;
+            }
+        }
+
+        if (alreadyDisplayed)
+            continue;
+
+        double nextDue = maintenanceRecords[i].odometer
+            + maintenanceRecords[i].interval;
+
+        cout << "\nMaintenance Type: "
+            << maintenanceRecords[i].maintenanceType;
+
+        cout << "\nNext Due At: " << nextDue << " km";
+
+        cout << "\nRemaining Distance: "
+            << nextDue - currentOdometer << " km\n";
+
+        recordFound = true;
+    }
+
+    if (!recordFound)
+    {
+        cout << "No maintenance records found for this vehicle!\n";
     }
 }
 
 
+
+
 void checkMaintenanceStatus()
 {
-    int id;
-    bool found = false;
+    if (vehicleCount == 0)
+    {
+        cout << "\nNo registered vehicles available!\n";
+        return;
+    }
 
-    cout << "Enter Vehicle ID: ";
-    cin >> id;
+    cout << "\n--- REGISTERED VEHICLES ---\n";
+
+    for (int i = 0; i < vehicleCount; i++)
+    {
+        cout << i + 1 << ". "
+            << vehicles[i].brand << " "
+            << vehicles[i].model
+            << " (ID: " << vehicles[i].vehicleID << ")\n";
+    }
+
+    int choice;
+
+    cout << "\nSelect vehicle: ";
+    cin >> choice;
+
+    if (choice < 1 || choice > vehicleCount)
+    {
+        cout << "Invalid selection!\n";
+        return;
+    }
+
+    int index = choice - 1;
+    int id = vehicles[index].vehicleID;
+
+    if (maintenanceRecordCount == 0)
+    {
+        cout << "\nNo maintenance records available!\n";
+        return;
+    }
+
+    cout << "\n====================================\n";
+    cout << "       MAINTENANCE STATUS\n";
+    cout << "====================================\n";
+
+    bool recordFound = false;
 
     for (int i = maintenanceRecordCount - 1; i >= 0; i--)
     {
-        if (maintenanceRecords[i].vehicleID == id)
+        if (maintenanceRecords[i].vehicleID != id)
+            continue;
+
+        bool alreadyDisplayed = false;
+
+        for (int j = i + 1; j < maintenanceRecordCount; j++)
         {
-            double nextDue = maintenanceRecords[i].odometer
-                + maintenanceRecords[i].interval;
-
-            double currentOdometer = 0;
-
-            for (int j = 0; j < vehicleCount; j++)
+            if (maintenanceRecords[j].vehicleID == id &&
+                maintenanceRecords[j].maintenanceType ==
+                maintenanceRecords[i].maintenanceType)
             {
-                if (vehicles[j].vehicleID == id)
-                {
-                    currentOdometer = vehicles[j].currentOdometer;
-                    found = true;
-                    break;
-                }
+                alreadyDisplayed = true;
+                break;
             }
-
-            if (!found)
-            {
-                cout << "Vehicle not found!\n";
-                return;
-            }
-
-            double remaining = nextDue - currentOdometer;
-
-            cout << "\nRemaining Distance: " << remaining << " km\n";
-
-            if (remaining <= 0)
-                cout << "Status: OVERDUE\n";
-            else if (remaining <= 500)
-                cout << "Status: UPCOMING\n";
-            else
-                cout << "Status: NORMAL\n";
-
-            found = true;
-            break;
         }
+
+        if (alreadyDisplayed)
+            continue;
+
+        double nextDue =
+            maintenanceRecords[i].odometer +
+            maintenanceRecords[i].interval;
+
+        double remaining =
+            nextDue - vehicles[index].currentOdometer;
+
+        cout << "\nMaintenance: "
+            << maintenanceRecords[i].maintenanceType;
+
+        cout << "\nNext Due At: "
+            << nextDue << " km";
+
+        cout << "\nRemaining Distance: "
+            << remaining << " km";
+
+        if (remaining <= 0)
+            cout << "\nStatus: OVERDUE\n";
+        else if (remaining <= 500)
+            cout << "\nStatus: UPCOMING\n";
+        else
+            cout << "\nStatus: NORMAL\n";
+
+        cout << "------------------------------------\n";
+
+        recordFound = true;
     }
 
-    if (!found)
-        cout << "No maintenance record found for this vehicle!\n";
+    if (!recordFound)
+    {
+        cout << "\nNo maintenance records found for this vehicle!\n";
+    }
 }
