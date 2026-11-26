@@ -7,12 +7,6 @@
     <ClCompile Include="menu.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="maintenance.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="expense.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source files">
@@ -32,5 +26,6 @@
     <ClInclude Include="expense.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="structures.h" />
   </ItemGroup>
 </Project>
