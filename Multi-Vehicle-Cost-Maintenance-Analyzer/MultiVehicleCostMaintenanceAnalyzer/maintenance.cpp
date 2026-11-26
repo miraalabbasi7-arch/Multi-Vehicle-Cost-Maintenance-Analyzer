@@ -120,26 +120,79 @@ void addMaintenanceRecord()
     cout << "\nMaintenance record added successfully!\n";
 }
 
+
+
 void displayMaintenanceRecords()
 {
     if (maintenanceRecordCount == 0)
     {
-        cout << "No maintenance records available!\n";
+        cout << "\nNo maintenance records available!\n";
         return;
     }
 
+    cout << "\n";
+    cout << "============================================\n";
+    cout << "          MAINTENANCE HISTORY\n";
+    cout << "============================================\n";
+
     for (int i = 0; i < maintenanceRecordCount; i++)
     {
-        cout << "\n--- Maintenance Record " << i + 1 << " ---\n";
+        cout << "\nRecord #" << i + 1 << "\n";
+        cout << "--------------------------------------------\n";
 
-        cout << "Vehicle ID: " << maintenanceRecords[i].vehicleID << endl;
-        cout << "Date: " << maintenanceRecords[i].date << endl;
-        cout << "Maintenance Type: " << maintenanceRecords[i].maintenanceType << endl;
-        cout << "Cost: " << maintenanceRecords[i].cost << endl;
-        cout << "Odometer: " << maintenanceRecords[i].odometer << endl;
-        cout << "Maintenance Interval: " << maintenanceRecords[i].interval << " km\n";
+        // Find the vehicle details using its ID
+        bool vehicleFound = false;
+
+        for (int j = 0; j < vehicleCount; j++)
+        {
+            if (vehicles[j].vehicleID ==
+                maintenanceRecords[i].vehicleID)
+            {
+                cout << "Vehicle: "
+                    << vehicles[j].brand << " "
+                    << vehicles[j].model << "\n";
+
+                cout << "Vehicle ID: "
+                    << vehicles[j].vehicleID << "\n";
+
+                vehicleFound = true;
+                break;
+            }
+        }
+
+        if (!vehicleFound)
+        {
+            cout << "Vehicle ID: "
+                << maintenanceRecords[i].vehicleID
+                << " (Vehicle details unavailable)\n";
+        }
+
+        cout << "Maintenance Type: "
+            << maintenanceRecords[i].maintenanceType << "\n";
+
+        cout << "Service Date: "
+            << maintenanceRecords[i].date << "\n";
+
+        cout << "Odometer Reading: "
+            << maintenanceRecords[i].odometer << " km\n";
+
+        cout << "Service Interval: "
+            << maintenanceRecords[i].interval << " km\n";
+
+        if (maintenanceRecords[i].cost == 0)
+        {
+            cout << "Maintenance Cost: Not provided\n";
+        }
+        else
+        {
+            cout << "Maintenance Cost: "
+                << maintenanceRecords[i].cost << "\n";
+        }
+
+        cout << "--------------------------------------------\n";
     }
 }
+
 
 
 void calculateNextMaintenance()
