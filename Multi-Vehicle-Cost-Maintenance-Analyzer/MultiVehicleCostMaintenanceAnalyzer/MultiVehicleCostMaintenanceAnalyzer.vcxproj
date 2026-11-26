@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="fuel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="vehicle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="expense.h" />
+    <ClInclude Include="fuel.h" />
     <ClInclude Include="maintenance.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="structures.h" />

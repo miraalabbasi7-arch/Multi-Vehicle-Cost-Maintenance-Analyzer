@@ -2,6 +2,8 @@
 #include <iomanip>
 #include "menu.h"
 #include "vehicle.h"
+#include "fuel.h"
+#include "structures.h"
 
 using namespace std;
 
@@ -48,8 +50,22 @@ int menu() {
         if (choice == 1) {
             vehicleMenu(vehicles, vehicleCount);
         }
-        else if (choice == 2) cout << "-> Fuel Tracking\n";
-        else if (choice == 3) cout << "-> Fuel Efficiency Analysis\n";
+
+        else if (choice == 2) {
+            fuelTrackingMenu(
+                vehicles, vehicleCount,
+                fuelRecords, fuelRecordCount,
+                MAX_RECORDS
+            );
+        }
+  
+        else if (choice == 3) {
+            fuelEfficiencyMenu(
+                vehicles, vehicleCount,
+                fuelRecords, fuelRecordCount
+            );
+
+        }
         else if (choice == 4) cout << "-> Maintenance Analyzer\n";
         else if (choice == 5) cout << "-> Expense Analysis\n";
         else if (choice == 6) cout << "-> Graphical Reports\n";
