@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ctime>
+#include <cstdio>
 #include "maintenance.h"
 
 using namespace std;
@@ -11,58 +13,112 @@ void addMaintenanceRecord()
         return;
     }
 
-    int id;
-    bool found = false;
+    if (vehicleCount == 0)
+    {
+        cout << "No registered vehicles available!\n";
+        return;
+    }
 
-    cout << "Enter Vehicle ID: ";
-    cin >> id;
+    cout << "\n--- REGISTERED VEHICLES ---\n";
 
     for (int i = 0; i < vehicleCount; i++)
     {
-        if (vehicles[i].vehicleID == id)
-        {
-            found = true;
-            break;
-        }
+        cout << i + 1 << ". "
+            << vehicles[i].brand << " "
+            << vehicles[i].model
+            << " (ID: " << vehicles[i].vehicleID << ")\n";
     }
 
-    if (!found)
+    int choice;
+
+    cout << "\nSelect vehicle: ";
+    cin >> choice;
+
+    if (choice < 1 || choice > vehicleCount)
     {
-        cout << "Vehicle not found!\n";
+        cout << "Invalid selection!\n";
         return;
     }
 
-    MaintenanceRecord& record = maintenanceRecords[maintenanceRecordCount];
+    int index = choice - 1;
 
-    record.vehicleID = id;
+    MaintenanceRecord& record =
+        maintenanceRecords[maintenanceRecordCount];
 
-    cout << "Enter maintenance date (DD/MM/YYYY): ";
-    cin >> record.date;
+    record.vehicleID = vehicles[index].vehicleID;
+    record.odometer = vehicles[index].currentOdometer;
 
-    cout << "Enter maintenance type: ";
-    cin >> record.maintenanceType;
+    int typeChoice;
 
-    cout << "Enter maintenance cost: ";
+    cout << "\n--- MAINTENANCE TYPE ---\n";
+    cout << "1. Engine Oil Change\n";
+    cout << "2. Oil Filter\n";
+    cout << "3. Air Filter\n";
+    cout << "4. Brake Inspection\n";
+    cout << "5. General Service\n";
+
+    cout << "Select maintenance type: ";
+    cin >> typeChoice;
+
+    switch (typeChoice)
+    {
+    case 1:
+        record.maintenanceType = "Engine Oil Change";
+        record.interval = 5000;
+        break;
+
+    case 2:
+        record.maintenanceType = "Oil Filter";
+        record.interval = 5000;
+        break;
+
+    case 3:
+        record.maintenanceType = "Air Filter";
+        record.interval = 10000;
+        break;
+
+    case 4:
+        record.maintenanceType = "Brake Inspection";
+        record.interval = 10000;
+        break;
+
+    case 5:
+        record.maintenanceType = "General Service";
+        record.interval = 5000;
+        break;
+
+    default:
+        cout << "Invalid maintenance type!\n";
+        return;
+    }
+
+    cout << "\nEnter maintenance cost (0 if unknown): ";
     cin >> record.cost;
 
-    cout << "Enter odometer reading: ";
-    cin >> record.odometer;
-
-    cout << "Enter maintenance interval (km): ";
-    cin >> record.interval;
-
-    if (record.cost <= 0 || record.odometer <= 0 || record.interval <= 0)
+    if (record.cost < 0)
     {
-        cout << "Invalid values! Record not saved.\n";
+        cout << "Invalid cost!\n";
         return;
     }
+
+    // Automatically get current date
+    time_t now = time(0);
+    tm localTime;
+    localtime_s(&localTime, &now);
+
+    char date[11];
+
+    sprintf_s(date, "%02d/%02d/%04d",
+        localTime.tm_mday,
+        localTime.tm_mon + 1,
+        localTime.tm_year + 1900);
+
+    record.date = date;
 
     maintenanceRecordCount++;
 
-    cout << "Maintenance record added successfully!\n";
-
+    cout << "\nMaintenance record added successfully!\n";
 }
-
 
 void displayMaintenanceRecords()
 {
