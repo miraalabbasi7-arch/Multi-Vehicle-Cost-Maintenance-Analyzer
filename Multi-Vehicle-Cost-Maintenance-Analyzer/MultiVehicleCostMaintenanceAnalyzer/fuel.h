@@ -8,6 +8,8 @@
 
 using namespace std;
 
+
+
 const int ALL_VEHICLES = -1;
 
 struct EfficiencyResult
@@ -19,6 +21,14 @@ struct EfficiencyResult
     double kmPerL;
     bool valid;
 };
+
+
+EfficiencyResult calculateVehicleEfficiency(
+	const FuelRecord* fuel,
+	int fuelCount,
+	int vehicleID
+);
+
 
 struct MonthlySpend
 {
@@ -55,11 +65,25 @@ bool addFuelRecord(
 );
 
 
+
+int loadFuelRecords(FuelRecord* fuel, int fuelCapacity,
+    const Vehicle* vehicles, int vehicleCount, int& skipped,
+    const string& filename = "fuel.txt");
+
+
+bool saveFuelRecords(const FuelRecord* fuel, int fuelCount, const string& filename = "fuel.txt");
+
+
+bool calculateKmPerL(double distance, double liters, double& kmPerL);
+
+
 double calculateFuelCost(const FuelRecord& record);
 
 double totalFuelCost(const FuelRecord* fuel, int fuelCount, int vehicleID);
 
 double totalFuelLitres(const FuelRecord* fuel, int fuelCount, int vehicleID);
+
+double calculateDistance(double previousOdometer, double currentOdometer);
 
 
 
@@ -87,6 +111,61 @@ void fuelEfficiencyMenu(
     int fuelCount
 );
 
+void displayFuelSpendingSummary(
+  const Vehicle* vehicles,
+    int vehicleCount,
+	const FuelRecord* fuel,
+    int fuelCount
+);
+
+void calculateAllEfficiencies(
+    const Vehicle* vehicles,
+    int vehicleCount,
+    const FuelRecord* fuel,
+    int fuelCount,
+    EfficiencyResult* results);
+
+
+void displayEfficiencyDetails(
+    const Vehicle* vehicles,
+    int vehicleCount,
+    const FuelRecord* fuel,
+    int fuelCount,
+    int vehicleID);
+
+
+int findMostEfficientVehicle(
+    const EfficiencyResult* results,
+    int count);
+
+
+void displayEfficiencyComparison(
+    const Vehicle* vehicles,
+    int vehicleCount,
+    const FuelRecord* fuel,
+    int fuelCount);
+
+
+void displayEfficiencyGraph(
+    const Vehicle* vehicles,
+    int vehicleCount,
+    const FuelRecord* fuel,
+    int fuelCount);
+
+
+int getMonthlyFuelSpending(
+    const FuelRecord* fuel,
+    int fuelCount,
+    int vehicleID,
+    MonthlySpend* out,
+    int maxMonths);
+
+void displayMonthlySpendingGraph(
+    const Vehicle* vehicles,
+    int vehicleCount,
+    const FuelRecord* fuel,
+    int fuelCount,
+    int vehicleID);
 
 
 

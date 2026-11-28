@@ -23,6 +23,7 @@ struct FuelRecord
     double litres;
     double pricePerLitre;
     double odometer;
+    bool fullTank;
 };
 
 struct MaintenanceRecord
