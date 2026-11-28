@@ -18,6 +18,7 @@ int maintenanceRecordCount = 0;
 
 
 int main() {
+
     menu();
     return 0;
 }
